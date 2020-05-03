@@ -35,8 +35,6 @@ import org.jboss.logging.Logger;
 
 @ApplicationScoped
 public class SmallRyeHealthReporter {
-    private static Logger LOG = Logger.getLogger(SmallRyeHealthReporter.class);
-
     private static final String ROOT_CAUSE = "rootCause";
 
     private static final String STACK_TRACE = "stackTrace";
@@ -187,7 +185,7 @@ public class SmallRyeHealthReporter {
             return jsonObject(check.call());
         } catch (RuntimeException e) {
             // Log Stacktrace to server log so an error is not just in Health Check response
-            LOG.error("Error processing Health Checks", e);
+            HealthLogging.log.error(e);
 
             HealthCheckResponseBuilder response = HealthCheckResponse.named(check.getClass().getName()).down();
 
